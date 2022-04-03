@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>/SHELV/</title>
+	<meta charset='utf-8'>
+	<link rel='stylesheet/less' type='text/css' href='index.less'/>
+	<link rel='stylesheet/less' type='text/css' href='./fa4.7.0/less/font-awesome.less'/>
+
+	<!-- Web Modules -->
+	<script src='./external/less-4.js'></script>
+	<script src='./external/vue.min.js'></script>
+	<script src='./external/socket.io.min.js'></script>
+
+</head>
+<body><div id='Shelv'>
+
+
+<div id='topui'>
+	<div v-for='i in viewlist' :class='{sel: view===i[0]}' @click='setView(i[0])'><i :class='i[1]'></i></div>
+</div>
+
+
+<div class='view' id='home' v-if='view === "home"'>
+	<h1><i class='fa fa-database'></i><span id='dblabel'>{{ database_name }} <i class='fa fa-chevron-right'></i></span></h1>
+	<div id='numberbox'>
+		<div><i class='fa fa-book'></i>	{{ main.length }}
+			<span v-if='main.length===1'>Volume</span>
+			<span v-else>Volumes</span>
+		</div>
+		<div><i class='fa fa-flag'></i>
+			<span v-if='groups.Series'>{{ Object.keys(groups.Series).length }}</span> Series
+		</div>
+		<!-- How many series are there...? -->
+		<div class='click'><i class='fa fa-plus'></i> Add New Manga</div>
+		<div class='click'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
+		<!-- Add another div for another number point -->
+	</div>
+</div>
+<div class='view' id='space' v-if='view === "space"'>
+
+</div>
+<div class='view' id='list' v-if='view === "list"'>
+	
+	<!-- Sort... -->
+
+	<div v-for='(x,i) in main' @click='setInstance(i)'><img :src='x.cover'/>{{ x.title }}</div>
+
+</div> <!-- https://www.googleapis.com/books/v1/volumes?q=isbn:9781974720514 -->
+
+
+<div id='editinstance' :class='{ hide : working_index === false}'>
+	<div class='close' @click='working_index = false'><i class='fa fa-chevron-right'></i></div>
+
+	<input type='text' class='heading' v-model='working_instance["title"]' placeholder='Volume Title...'/>
+	<input type='text' class='subheading' v-model='working_instance["author"]' placeholder='Author...'/>
+	<div class='sidegrid'>
+		<span>ISBN: </span>
+		<input type='number' v-model='working_instance["isbn"]'/>
+	</div>
+	<div class='divider'></div>
+
+	<!-- <div v-for='x in typeset.editmap'>
+		<div v-if='x === "divider"' class='divider'></div>
+		<input v-else-if='typeset.instance[x.value] === "String"' type='text' :class='x.view' v-model='working_instance[x.value]'/>
+		<input v-else-if='typeset.instance[x.value] === "Integer"' type='number' :class='x.view' v-model='working_instance[x.value]'/>
+		<div v-else-if='typeset.instance[x.value] === "Image"'>
+			<img :src='working_instance[x.value]'/>
+		</div>
+		<div v-else>
+			{{ working_instance[x.value] }}
+		</div>
+	</div> -->
+</div>
+
+
+<!-- Main -->
+<script src='./index.js'></script>
+
+</div></body>
+</html>
