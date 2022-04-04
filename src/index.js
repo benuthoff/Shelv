@@ -1,6 +1,6 @@
-// `shelv`
+// Shelv
 // by Ben Uthoff
-// Client-side Code
+// Web Code
 
 // Socket Pointers
 var socket = io();

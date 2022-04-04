@@ -1,6 +1,6 @@
-// `shelv`
+// Shelv
 // by Ben Uthoff
-// Server-side Code
+// Server Code
 
 // Dependencies and Setup.
 const express = require('express');
