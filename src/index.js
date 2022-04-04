@@ -85,6 +85,10 @@ var Shelv = new Vue({
 			};
 			this.working_index = index;
 			this.working_instance = _(this.main[index]);
+		},
+
+		handlenet() {
+			
 		}
 
 	}
