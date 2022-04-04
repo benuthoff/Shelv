@@ -92,13 +92,18 @@ body {
 
 #numberbox {
 	margin: 72px 24px;
-	& > div {
+	.grid {
+		display: grid;
+		column-gap: 24px;
+	}
+	.box {
 		font-size: 32px;
 		outline: solid 4px var(--fade-outline);
 		padding: 24px;
 		margin-bottom: 24px;
 		.fa { margin-right: 12px }
 		transition: var(--time);
+		&.center { text-align: center }
 		&.click:hover, &.click:active {
 			background-color: var(--solid-color);
 			outline-color: var(--solid-color);

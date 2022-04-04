@@ -11,8 +11,7 @@ const Socket = require('socket.io');
 const io = new Socket.Server(server);
 
 const fs = require('fs');
-const root = require('os').homedir() + '/Documents/shelv-root';
-
+const root = './data';
 
 
 // Default client data...
@@ -20,10 +19,15 @@ var __config = {
 	open_database: 'MANGA001',
 	database_list: [],
 };
+var __newfile = {
+	type: 'manga',
+	main: [],
+	groups: {}
+}
 
 // Function declarations...
 function saveconfig() {
-fs.writeFileSync(root+'/__config.json', 
+fs.writeFileSync(root+'/__config.json',
 JSON.stringify(__config));};
 
 
@@ -32,12 +36,15 @@ JSON.stringify(__config));};
 console.log('Loading databases...');
 if (!fs.existsSync(root)){  fs.mkdirSync(root) }; // File Directory
 if (!fs.existsSync(root+'/__config.json')) { saveconfig() }; // Config File
+if (!fs.existsSync(root+'/__newfile.json')) // New file makeup.
+{ fs.writeFileSync(root+'/__newfile.json',
+JSON.stringify(__newfile)) };
 
 // Read and update saved data...
 __config = JSON.parse(fs.readFileSync(root+'/__config.json'));
 __config.database_list = [];
 fs.readdirSync(root).forEach((file)=>{
-	if (file === '__config.json') { return };
+	if (file.startsWith('__')) { return };
 	if (file.endsWith('.json')) {
 		__config.database_list.push( file.substring(0,file.length-5) );
 	};

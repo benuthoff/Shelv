@@ -1,0 +1,38 @@
+{
+	"type": "manga",
+	"main": [
+		{
+			"title": "Chainsaw Man, Vol. 1",
+			"author": "Tatsuki Fujimoto",
+			"isbn": 9781974709939,
+
+			"cover": "http://books.google.com/books/content?id=gnVVzQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+			"series": "Chainsaw Man",
+			"volume": 1,
+
+			"added": "Unknown",
+			"status": "Completed",
+			"tags": [],
+			"notes": ""
+		},
+		{
+			"title": "Chainsaw Man, Vol. 2",
+			"author": "Tatsuki Fujimoto",
+			"isbn": "9781974709946",
+
+			"cover": "http://books.google.com/books/content?id=LmxUzQEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+			"series": "Chainsaw Man",
+			"volume": 2,
+
+			"added": "Unknown",
+			"status": "Completed",
+			"tags": [],
+			"notes": ""
+		}
+	],
+	"groups": {
+		"Series": {
+			"Chainsaw Man": 2
+		}
+	}
+}

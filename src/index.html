@@ -5,12 +5,12 @@
 	<title>/SHELV/</title>
 	<meta charset='utf-8'>
 	<link rel='stylesheet/less' type='text/css' href='index.less'/>
-	<link rel='stylesheet/less' type='text/css' href='./fa4.7.0/less/font-awesome.less'/>
 
 	<!-- Web Modules -->
 	<script src='./external/less-4.js'></script>
 	<script src='./external/vue.min.js'></script>
 	<script src='./external/socket.io.min.js'></script>
+	<script src='https://use.fontawesome.com/ae4de1a544.js'></script>
 
 </head>
 <body><div id='Shelv'>
@@ -24,17 +24,22 @@
 <div class='view' id='home' v-if='view === "home"'>
 	<h1><i class='fa fa-database'></i><span id='dblabel'>{{ database_name }} <i class='fa fa-chevron-right'></i></span></h1>
 	<div id='numberbox'>
-		<div><i class='fa fa-book'></i>	{{ main.length }}
-			<span v-if='main.length===1'>Volume</span>
-			<span v-else>Volumes</span>
+
+		<div class='grid' style='grid-template-columns: 1fr 1fr;'>
+			<div class='box center'><i class='fa fa-book'></i>	
+				{{ main.length }}
+				<span v-if='main.length===1'>Volume</span>
+				<span v-else>Volumes</span>
+			</div>
+	
+			<div class='box center'><i class='fa fa-flag'></i>
+				<span v-if='groups.Series'>{{ Object.keys(groups.Series).length }}</span> Series
+			</div>
 		</div>
-		<div><i class='fa fa-flag'></i>
-			<span v-if='groups.Series'>{{ Object.keys(groups.Series).length }}</span> Series
-		</div>
-		<!-- How many series are there...? -->
-		<div class='click'><i class='fa fa-plus'></i> Add New Manga</div>
-		<div class='click'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
-		<!-- Add another div for another number point -->
+
+		<div class='box click'><i class='fa fa-plus'></i> Add New Manga</div>
+		<div class='box click'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
+		
 	</div>
 </div>
 <div class='view' id='space' v-if='view === "space"'>
