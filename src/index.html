@@ -22,7 +22,9 @@
 
 
 <div class='view' id='home' v-if='view === "home"'>
-	<h1><i class='fa fa-database'></i><span id='dblabel'>{{ database_name }} <i class='fa fa-chevron-right'></i></span></h1>
+	<h1><i class='fa fa-database'></i>
+		<span id='dblabel' @click='window = "switch_database"'>{{ database_name }} <i class='fa fa-chevron-right'></i></span>
+	</h1>
 	<div id='numberbox'>
 
 		<div class='grid' style='grid-template-columns: 1fr 1fr;'>
@@ -51,7 +53,7 @@
 
 	<div v-for='(x,i) in main' @click='setInstance(i)'><img :src='x.cover'/>{{ x.title }}</div>
 
-</div> <!-- https://www.googleapis.com/books/v1/volumes?q=isbn:9781974720514 -->
+</div> <!-- https://www.googleapis.com/books/v1/volumes?q=isbn:___ -->
 
 
 <div id='editinstance' :class='{ hide : working_index === false}'>
@@ -61,27 +63,42 @@
 	<input type='text' class='subheading' v-model='working_instance["author"]' placeholder='Author...'/>
 	<div class='sidegrid'>
 		<span>ISBN: </span>
-		<input type='number' v-model='working_instance["isbn"]'/>
+		<input type='text' v-model='working_instance["isbn"]'/>
 	</div>
+
 	<div class='divider'></div>
 
-	<!-- <div v-for='x in typeset.editmap'>
-		<div v-if='x === "divider"' class='divider'></div>
-		<input v-else-if='typeset.instance[x.value] === "String"' type='text' :class='x.view' v-model='working_instance[x.value]'/>
-		<input v-else-if='typeset.instance[x.value] === "Integer"' type='number' :class='x.view' v-model='working_instance[x.value]'/>
-		<div v-else-if='typeset.instance[x.value] === "Image"'>
-			<img :src='working_instance[x.value]'/>
+	<div class='stacked'>
+		<div v-if='working_instance["cover"] === false' class='blank_img'><dash></dash></div>
+		<img v-else :src='working_instance["cover"]'/>
+		<div>
+
+			<div class='sidegrid'>
+				<span>Series: </span>
+				<input type='text' v-model='working_instance["series"]'/>
+			</div>
+			<div class='sidegrid'>
+				<span>Volume #: </span>
+				<input type='number' v-model='working_instance["volume"]'/>
+			</div>
+
 		</div>
-		<div v-else>
-			{{ working_instance[x.value] }}
-		</div>
-	</div> -->
+	</div>
+
 </div>
 
 
-<div id='blind'>
-	<div id='net' @click='handlenet()'></div>
-	
+<div id='blind' v-if='window'>
+	<div id='net' @click='window = false;'></div>
+
+	<div v-if='window === "switch_database"' id='switch_database' class='window'>
+		<div class='sel' @click='window = false'><i class='fa fa-database'></i> {{ database_name }}</div>
+		<div v-for='x in database_list' v-if='x !== database_name'>
+			<i class='fa fa-database'></i> {{ x }}
+		</div>
+		<div><i class='fa fa-plus'></i> New</div>
+	</div>
+
 </div>
 
 

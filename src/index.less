@@ -22,8 +22,15 @@ body {
 	--active: scale(0.96);
 	--active-list: scale(0.99);
 
+	// Patterns from @d__raptis on twitter (https://www.magicpattern.design/tools/css-backgrounds)
+	--bg-pattern: radial-gradient(var(--fade-outline) 1px, var(--background) 1px);
+	--null-pattern: repeating-linear-gradient(
+			-45deg, var(--fade-outline), var(--fade-outline) 5px, transparent 5px, transparent 25px
+		);
+	--box-shadow: #00000030;
+
 	background-color: #ffffff;
-	background-image: radial-gradient(var(--fade-outline) 1px, var(--background) 1px);
+	background-image: var(--bg-pattern);
 	background-size: 15px 15px;
 
 }
@@ -146,10 +153,10 @@ body {
 	padding: 32px;
 	font-size: 24px;
 
-	background-image: radial-gradient(var(--fade-outline) 1px, var(--background) 1px);
+	background-image: var(--bg-pattern);
 	background-size: 15px 15px;
 	background-position: calc(-100vw) -12px;
-	box-shadow: #00000030 0 0 24px;
+	box-shadow: var(--box-shadow) 0 0 24px;
 
 	transition: transform 0.4s ease-in-out;
 
@@ -200,6 +207,7 @@ body {
 		width: calc(500px - 28px);
 		margin-bottom: 12px;
 		font-family: 'Oxygen-Bold';
+		transition: var(--time);
 		&:focus { outline-color: var(--solid-color); }
 	}
 
@@ -231,14 +239,88 @@ body {
 		}
 	}
 
+	.stacked {
+		display: grid;
+		grid-template-columns: min-content auto;
+		column-gap: 24px;
+		.sidegrid {
+			grid-template-columns: auto;
+			span {
+				padding-left: 0;
+				margin-bottom: 12px;
+			}
+		}
+	}
+
+	img, .blank_img {
+		width: 174px;
+		outline: solid 3px var(--fade-outline);
+		padding: 10px;
+		margin: 3px;
+	}
+
+	.blank_img > dash {
+		display: block;
+		height: 262px;
+		background-image: var(--null-pattern);
+	}
+
 }
 
 #blind {
+
 	position: fixed;
 	top: 0; right: 0;
 	left: 0; bottom: 0;
 	background-color: #00000024;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	animation: fadeIn 0.14s ease-in-out;
+
+	#net {
+		position: fixed;
+		top: 0; right: 0;
+		left: 0; bottom: 0;
+		z-index: 1;
+	}
+	.window {
+		background-color: var(--background);
+		background-image: var(--bg-pattern);
+		background-size: 15px 15px;
+		z-index: 2;
+		outline: solid 3px var(--fade-outline);
+		box-shadow: var(--box-shadow) 0 0 100px;
+	}
+
+	#switch_database {
+		width: 400px;
+		height: 80vh;
+		padding: 24px;
+		& > div {
+			font-family: 'Oxygen-Bold';
+			display: block;
+			font-size: 46px;
+			text-align: center;
+			padding: 32px;
+			outline: solid 4px var(--fade-outline);
+			margin-bottom: 24px;
+			transition: var(--time);
+			.fa { margin-right: 4px }
+			&.sel { outline-color: var(--solid-color); }
+			&:hover, &:active {
+				outline-color: var(--solid-color);
+			}
+			&:active {
+				transform: var(--active);
+			}
+		}
+	}
+
 }
+
+
 
 .view {
 	margin: 52px;
@@ -266,13 +348,9 @@ h1 {
 }
 
 /* animations */
-@keyframes slidein {
-	from {
-		transform: translate(500px,0);
-	}
-	to {
-		transform: translate(0,0);
-	}
+@keyframes fadeIn {
+	from { opacity: 0 }
+	to { opacity: 1 }
 }
 
 /* font import */

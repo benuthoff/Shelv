@@ -13,6 +13,7 @@ var Shelv = new Vue({
 
 
 		view: 'home',
+		window: false,
 		viewlist: [
 			['home', 'fa fa-home'],
 			['space', 'fa fa-th-large'],
@@ -46,23 +47,8 @@ var Shelv = new Vue({
 				notes: 'LongString'
 			},
 			selections: {
-				'Status': ['Plan to Read', 'Reading', 'Complete']
-			},
-			editmap: [
-				{ name: 'Title', view: 'heading', value: 'title', placeholder: 'Volume title...' },
-				{ name: 'Author', view: 'subheading', value: 'author', placeholder: 'Author...' },
-				{ name: 'ISBN', view: 'subheading', value: 'isbn', placeholder: 'xxxxxxxxxxxxx' },
-				'divider',
-				{ name: 'Cover', view: 'cover', value: 'cover' },
-				{ name: 'Series', view: 'body', value: 'series', placeholder: 'Series name...'},
-				{ name: 'Volume', view: 'body', value: 'volume', placeholder: 'Volume #...'},
-				'divider',
-				{ name: 'Date Added', view: 'body', value: 'added', placeholder: 'xx.xx.xx'},
-				{ name: 'Status', view: 'body', value: 'status', placeholder: 'Plan to Read'},
-				{ name: 'Tags', view: 'body', value: 'tags', placeholder: 'Tags...'},
-				{ name: 'notes', view: 'body', value: 'notes', placeholder: 'Write some notes...'},
-
-			]
+				'Status': ['Plan to Read', 'Reading', 'Complete', '']
+			}
 		}
 
 	},
@@ -85,10 +71,6 @@ var Shelv = new Vue({
 			};
 			this.working_index = index;
 			this.working_instance = _(this.main[index]);
-		},
-
-		handlenet() {
-			
 		}
 
 	}
