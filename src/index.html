@@ -11,6 +11,7 @@
 	<script src='./external/vue.min.js'></script>
 	<script src='./external/socket.io.min.js'></script>
 	<script src='https://use.fontawesome.com/ae4de1a544.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' ></script>
 
 </head>
 <body><div id='Shelv'>
@@ -40,7 +41,7 @@
 		</div>
 
 		<div class='box click'><i class='fa fa-plus'></i> Add New Manga</div>
-		<div class='box click'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
+		<div class='box click' @click='barcode'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
 		
 	</div>
 </div>
@@ -59,11 +60,11 @@
 <div id='editinstance' :class='{ hide : working_index === false}'>
 	<div class='close' @click='working_index = false'><i class='fa fa-chevron-right'></i></div>
 
-	<input type='text' class='heading' v-model='working_instance["title"]' placeholder='Volume Title...'/>
-	<input type='text' class='subheading' v-model='working_instance["author"]' placeholder='Author...'/>
+	<input type='text' class='heading' v-model='working_instance["title"]' placeholder='Volume Title...' @blur='saveInstance'/>
+	<input type='text' class='subheading' v-model='working_instance["author"]' placeholder='Author...' @blur='saveInstance'/>
 	<div class='sidegrid'>
 		<span>ISBN: </span>
-		<input type='text' v-model='working_instance["isbn"]'/>
+		<input type='text' v-model='working_instance["isbn"]' @blur='saveInstance'/>
 	</div>
 
 	<div class='divider'></div>
@@ -73,17 +74,23 @@
 		<img v-else :src='working_instance["cover"]'/>
 		<div>
 
-			<div class='sidegrid'>
+			<div class='topgrid'>
 				<span>Series: </span>
-				<input type='text' v-model='working_instance["series"]'/>
+				<input type='text' v-model='working_instance["series"]' @blur='saveInstance'/>
+			</div>
+			<div class='topgrid'>
+				<span>Volume #: </span>
+				<input type='number' v-model='working_instance["volume"]' @blur='saveInstance'/>
 			</div>
 			<div class='sidegrid'>
-				<span>Volume #: </span>
-				<input type='number' v-model='working_instance["volume"]'/>
+				<span>Pages: </span>
+				<input type='number' v-model='working_instance["pages"]' @blur='saveInstance'/>
 			</div>
 
-		</div>
+		</div>		
 	</div>
+
+	<div class='divider'></div>
 
 </div>
 
@@ -97,6 +104,10 @@
 			<i class='fa fa-database'></i> {{ x }}
 		</div>
 		<div><i class='fa fa-plus'></i> New</div>
+	</div>
+
+	<div v-if='window === "qrcode"' id='qrcode' class='window'>
+				
 	</div>
 
 </div>

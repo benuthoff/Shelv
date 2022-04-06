@@ -18,12 +18,13 @@ const root = './data';
 var __config = {
 	open_database: 'MANGA001',
 	database_list: [],
+	address: false
 };
 var __newfile = {
 	type: 'manga',
 	main: [],
 	groups: {}
-}
+};
 
 // Function declarations...
 function saveconfig() {
@@ -36,9 +37,6 @@ JSON.stringify(__config));};
 console.log('Loading databases...');
 if (!fs.existsSync(root)){  fs.mkdirSync(root) }; // File Directory
 if (!fs.existsSync(root+'/__config.json')) { saveconfig() }; // Config File
-if (!fs.existsSync(root+'/__newfile.json')) // New file makeup.
-{ fs.writeFileSync(root+'/__newfile.json',
-JSON.stringify(__newfile)) };
 
 // Read and update saved data...
 __config = JSON.parse(fs.readFileSync(root+'/__config.json'));
@@ -60,8 +58,13 @@ io.on('connection', (socket) => {
 
 	socket.on('data_overwrite_request', (name)=>{
 		__config.open_database = name;
+		saveconfig();
 		let data = JSON.parse(fs.readFileSync(root+'/' + name + '.json'));
 		socket.emit('data_overwrite', data);
+	});
+
+	socket.on('save_data', (pack)=>{
+		fs.writeFileSync(root+'/' + __config.open_database + '.json', JSON.stringify(pack));
 	});
 
 });
@@ -70,4 +73,5 @@ io.on('connection', (socket) => {
 app.use(express.static('src'));
 server.listen(9091, () => {
 	console.log('listening on *:9091');
+	__config.address = server.address();
 });

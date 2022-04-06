@@ -40,6 +40,7 @@ var Shelv = new Vue({
 				cover: 'Image',
 				series: 'Group:Series',
 				volume: 'Integer',
+				pages: 'Integer',
 
 				added: 'Date',
 				status: 'Select:Status',
@@ -71,6 +72,24 @@ var Shelv = new Vue({
 			};
 			this.working_index = index;
 			this.working_instance = _(this.main[index]);
+		},
+
+		saveInstance() {
+			this.main[this.working_index] = this.working_instance;
+			socket.emit('save_data', {
+				'main': this.main,
+				'type': this.database_type,
+				'groups': this.groups
+			});
+		},
+
+		barcode() {
+			this.window = 'qrcode';
+			setTimeout(()=>{
+				new QRCode(
+				document.getElementById('qrcode'),
+				'https://shelv.benuthoff.repl.co/barcode/');
+			}, 10);
 		}
 
 	}
@@ -84,7 +103,7 @@ socket.on('configfile', (pack)=>{
 socket.on('data_overwrite', (db)=>{
 	console.log('OVERWRITE.')
 	Shelv.main = db.main;
-	Shelv.database_type = db.dbtype;
+	Shelv.database_type = db.type;
 	Shelv.groups = db.groups;
 });
 

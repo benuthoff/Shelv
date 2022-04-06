@@ -241,13 +241,24 @@ body {
 
 	.stacked {
 		display: grid;
-		grid-template-columns: min-content auto;
+		grid-template-columns: 194px 282px;
 		column-gap: 24px;
-		.sidegrid {
-			grid-template-columns: auto;
+		.topgrid {
+			input {
+				width: 258px;
+			}
 			span {
-				padding-left: 0;
+				font-family: 'Oxygen-Bold';
+				font-size: 26px;
+				display: block;
 				margin-bottom: 12px;
+			}
+		}
+		.sidegrid {
+    		margin-top: 12px;
+			span { padding-left: 0 }
+			input {
+				width: 162px;
 			}
 		}
 	}
@@ -318,6 +329,29 @@ body {
 		}
 	}
 
+	#qrcode {
+		background-color: transparent;
+		background-image: none;
+		padding: 24px;
+		width: 256px; height: 256px;
+	}
+
+}
+
+
+#barcodescanner {
+	position: fixed;
+	top: 0; right: 0;
+	left: 0; bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	video {
+		width: 80vw;
+		display: none;
+	}
+	
 }
 
 
