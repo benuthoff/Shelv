@@ -28,35 +28,64 @@ var Shelv = new Vue({
 		main: [],
 		groups: {},
 
+		isbn_search: {
+			id: '',
+			result: false
+		},
+
 		working_index: false,
 		working_instance: false,
 
-		typeset: {
-			'instance': {
-				title: 'String',
-				author: 'String',
-				isbn: 'Integer',
-
-				cover: 'Image',
-				series: 'Group:Series',
-				volume: 'Integer',
-				pages: 'Integer',
-
-				added: 'Date',
-				status: 'Select:Status',
-				tags: 'List',
-				notes: 'LongString'
-			},
-			selections: {
-				'Status': ['Plan to Read', 'Reading', 'Complete', '']
-			}
-		}
+		statusoptions: ['Plan to Read', 'Reading', 'Complete', '']
 
 	},
 
 	watch: {
 		database_name: (next, prev) => {
 			socket.emit('data_overwrite_request', next);
+		},
+		window: (next, prev) => {
+			if (prev === 'barcode') {};
+			if (next === 'barcode') { Shelv.scanner_init() };
+		},
+		'isbn_search.id': (next, prev) => {
+			if (next.length === 13) {
+
+				Shelv.isbn_search.result = 'loading';
+				fetch('https://www.googleapis.com/books/v1/volumes?q=isbn:'+next)
+				.then(response => response.json()).then((data) => {
+
+					if (data.totalItems > 0) {
+
+						let i = data.items[0].volumeInfo;
+
+						Shelv.isbn_search.result = {
+							'title': i.title,
+							'author': i.authors.join(', '),
+							'isbn': next,
+							'cover': i.imageLinks.thumbnail.replace('http', 'https'),
+
+							'series': '',
+							'volume': 0,
+							'pages': i.pageCount,
+
+							'added': 'Unknown',
+							'status': '',
+							'notes': ''
+						};
+
+						if (Shelv.isbn_search.result.title.includes(', Vol. ')) {
+							let i = Shelv.isbn_search.result.title.split(', ');
+							Shelv.isbn_search.result.series = i[0];
+							Shelv.isbn_search.result.volume = i[1].split(' ')[1];
+						};
+
+					} else { Shelv.isbn_search.result = 'error' };
+
+				});
+
+
+			};
 		}
 	},
 
@@ -83,25 +112,49 @@ var Shelv = new Vue({
 			});
 		},
 
-		barcode() {
-			this.window = 'qrcode';
-			setTimeout(()=>{
-				new QRCode(
-				document.getElementById('qrcode'),
-				'https://shelv.benuthoff.repl.co/barcode/');
-			}, 10);
+		add_manual() {
+			this.window = false;
+			this.main.unshift({
+				title: 'Unmarked Volume',
+				author: 'Unknown',
+				isbn: 'xxxxxxxxxxxxx',
+				cover: false,
+				series: '',
+				volume: 0,
+				pages: '0',
+				added: 'Unknown',
+				status: '',
+				notes: ''
+			});
+			this.setView('list');
+			this.setInstance(0);
+		},
+
+		add_isbn() {
+			this.window = false;
+			this.main.unshift(this.isbn_search.result);
+			this.setView('list');
+			this.setInstance(0);
+		},
+
+		scanner_init() {
+
 		}
 
 	}
 
 });
 
+
+var mediastream;
+
+// Socket endpoints.
 socket.on('configfile', (pack)=>{
 	Shelv.database_name = pack.open_database; // Currently open database;
 	Shelv.database_list = pack.database_list; // List of databases;
 });
-socket.on('data_overwrite', (db)=>{
-	console.log('OVERWRITE.')
+socket.on('database_load', (db)=>{
+	console.log('LOADED DATABASE.')
 	Shelv.main = db.main;
 	Shelv.database_type = db.type;
 	Shelv.groups = db.groups;

@@ -10,6 +10,7 @@ const server = require('http').createServer(app);
 const Socket = require('socket.io');
 const io = new Socket.Server(server);
 
+const os = require('os');
 const fs = require('fs');
 const root = './data';
 
@@ -17,8 +18,7 @@ const root = './data';
 // Default client data...
 var __config = {
 	open_database: 'MANGA001',
-	database_list: [],
-	address: false
+	database_list: []
 };
 var __newfile = {
 	type: 'manga',
@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
 		__config.open_database = name;
 		saveconfig();
 		let data = JSON.parse(fs.readFileSync(root+'/' + name + '.json'));
-		socket.emit('data_overwrite', data);
+		socket.emit('database_load', data);
 	});
 
 	socket.on('save_data', (pack)=>{
@@ -73,5 +73,4 @@ io.on('connection', (socket) => {
 app.use(express.static('src'));
 server.listen(9091, () => {
 	console.log('listening on *:9091');
-	__config.address = server.address();
 });

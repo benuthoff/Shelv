@@ -11,7 +11,6 @@
 	<script src='./external/vue.min.js'></script>
 	<script src='./external/socket.io.min.js'></script>
 	<script src='https://use.fontawesome.com/ae4de1a544.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js' ></script>
 
 </head>
 <body><div id='Shelv'>
@@ -40,8 +39,8 @@
 			</div>
 		</div>
 
-		<div class='box click'><i class='fa fa-plus'></i> Add New Manga</div>
-		<div class='box click' @click='barcode'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
+		<div class='box click' @click='window = "newitem"'><i class='fa fa-plus'></i> Add New Manga</div>
+		<div class='box click' @click='window = "barcode"'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
 		
 	</div>
 </div>
@@ -87,7 +86,7 @@
 				<input type='number' v-model='working_instance["pages"]' @blur='saveInstance'/>
 			</div>
 
-		</div>		
+		</div>
 	</div>
 
 	<div class='divider'></div>
@@ -106,8 +105,34 @@
 		<div><i class='fa fa-plus'></i> New</div>
 	</div>
 
-	<div v-if='window === "qrcode"' id='qrcode' class='window'>
-				
+	<div v-if='window === "newitem"' id='newitem' class='window'>
+		<div @click='window = "isbn_search"'><i class='fa fa-hashtag'></i> Add by ISBN</div>
+		<div @click='add_manual()'><i class='fa fa-pencil-square-o'></i> Add Manually</div>
+	</div>
+
+	<div v-if='window === "isbn_search"' id='isbn_search' class='window'>
+		<div id='search_in' class='sidegrid'>
+			ISBN: <input type='text' placeholder='xxxxxxxxxxxxx' v-model='isbn_search.id'/>
+		</div>
+		<div v-if='isbn_search.result === "loading"'>Loading...</div>
+		<div v-else-if='isbn_search.result === "error"'>Couldn't find book data.</div>
+		<div id='search_results' v-else-if='isbn_search.result'>
+			
+			<div class='grid'>
+				<img :src='isbn_search.result.cover'/>
+				<div>
+					<div class='heading'>{{ isbn_search.result.title }}</div>
+					<div>{{ isbn_search.result.author }}</div>
+				</div>
+			</div>
+
+			<div class='addbutton' @click='add_isbn()'>Add to Library</div>
+			
+		</div>
+	</div>
+
+	<div v-if='window === "barcode"' id='barcode' class='window'>
+		
 	</div>
 
 </div>

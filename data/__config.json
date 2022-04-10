@@ -1,1 +1,1 @@
-{"open_database":"MANGA001","database_list":["MANGA001"],"address":{"address":"::","family":"IPv6","port":9091}}
+{"open_database":"MANGA001","database_list":["MANGA001"],"address":"192.168.2.19:9091","static_address":false}
