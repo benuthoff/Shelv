@@ -105,6 +105,10 @@ var Shelv = new Vue({
 
 		saveInstance() {
 			this.main[this.working_index] = this.working_instance;
+			this.saveData();
+		},
+
+		saveData() {
 			socket.emit('save_data', {
 				'main': this.main,
 				'type': this.database_type,
@@ -128,6 +132,7 @@ var Shelv = new Vue({
 			});
 			this.setView('list');
 			this.setInstance(0);
+			this.saveData();
 		},
 
 		add_isbn() {
@@ -135,6 +140,7 @@ var Shelv = new Vue({
 			this.main.unshift(this.isbn_search.result);
 			this.setView('list');
 			this.setInstance(0);
+			this.saveData();
 		},
 
 		scanner_init() {

@@ -97,6 +97,7 @@
 <div id='blind' v-if='window'>
 	<div id='net' @click='window = false;'></div>
 
+	<!-- Switching DB -->
 	<div v-if='window === "switch_database"' id='switch_database' class='window'>
 		<div class='sel' @click='window = false'><i class='fa fa-database'></i> {{ database_name }}</div>
 		<div v-for='x in database_list' v-if='x !== database_name'>
@@ -105,11 +106,13 @@
 		<div><i class='fa fa-plus'></i> New</div>
 	</div>
 
+	<!-- New Item Menu -->
 	<div v-if='window === "newitem"' id='newitem' class='window'>
 		<div @click='window = "isbn_search"'><i class='fa fa-hashtag'></i> Add by ISBN</div>
 		<div @click='add_manual()'><i class='fa fa-pencil-square-o'></i> Add Manually</div>
 	</div>
 
+	<!-- Search Book by ISBN -->
 	<div v-if='window === "isbn_search"' id='isbn_search' class='window'>
 		<div id='search_in' class='sidegrid'>
 			ISBN: <input type='text' placeholder='xxxxxxxxxxxxx' v-model='isbn_search.id'/>
@@ -131,6 +134,7 @@
 		</div>
 	</div>
 
+	<!-- Scan Barcode into Library -->
 	<div v-if='window === "barcode"' id='barcode' class='window'>
 		
 	</div>
