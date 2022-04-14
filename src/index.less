@@ -17,6 +17,7 @@ body {
 	--background: #ffffff;
 	--fade-icon: #00000094;
 	--solid-color: #363636;
+	--delete-color: #ff4f4f;
 
 	--time: 0.1s ease-in-out, transform 0s, background-image 0s;
 	--active: scale(0.96);
@@ -142,6 +143,52 @@ body {
 	}
 }
 
+#space {
+	display: flex;
+}
+#space > div {
+
+	font-size: 32px;
+	font-family: 'Oxygen-Bold';
+	width: 400px;
+	margin: 24px;
+	outline: solid 3px var(--fade-outline);
+
+	display: grid;
+	grid-template-rows: 200px min-content;
+	padding: 12px;
+
+	& > * { 
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.images {
+
+		font-size: 0;
+		img {
+			width: 120px;
+		}
+		img.side {
+			transform: scale(0.90) translateY(10px);
+			opacity: 0.75;
+		}
+	}
+
+	.label {
+		border-top: solid 3px var(--fade-outline);
+		padding: 10px;
+		margin: 0 10px;
+		span {
+			font-size: 24px;
+			color: var(--fade-icon);
+			margin-left: 12px;
+		}
+	}
+
+}
+
 #editinstance {
 	position: fixed;
 	top: 0; right: 0;
@@ -218,6 +265,25 @@ body {
 		display: block;
 		height: 262px;
 		background-image: var(--null-pattern);
+	}
+
+	.delete-key {
+		display: block;
+		font-size: 20px;
+		color: var(--delete-color);
+		outline: solid 3px var(--fade-outline);
+		padding: 12px;
+		font-family: 'Oxygen-Bold';
+		transition: var(--time);
+		text-align: center;
+		&:hover, &:active {
+			background-color: var(--delete-color);
+			outline-color: var(--delete-color);
+			color: var(--background);
+		}
+		&:active {
+			transform: var(--active);
+		}
 	}
 
 }

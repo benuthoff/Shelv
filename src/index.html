@@ -40,11 +40,24 @@
 		</div>
 
 		<div class='box click' @click='window = "newitem"'><i class='fa fa-plus'></i> Add New Manga</div>
-		<div class='box click' @click='window = "barcode"'><i class='fa fa-barcode'></i> Open Barcode Scanner</div>
+		<div class='box click' @click='updateStats()'><i class='fa fa-refresh'></i> Update Statistics</div>
 		
 	</div>
 </div>
 <div class='view' id='space' v-if='view === "space"'>
+
+	<!-- Series View -->
+	<div v-for='x in Object.keys(groups.Series).sort()'>
+
+		<div class='images'>
+			<img v-if='series(x).length > 2' :src='series(x)[2].cover' class='side left' />
+			<img :src='series(x)[0].cover'/>
+			<img v-if='series(x).length > 1' :src='series(x)[1].cover' class='side right' />
+		</div>
+
+		<div class='label'>{{ x }} <span>({{ groups.Series[x] }})</span></div>
+
+	</div>
 
 </div>
 <div class='view' id='list' v-if='view === "list"'>
@@ -91,6 +104,8 @@
 
 	<div class='divider'></div>
 
+	<div class='delete-key'><i class='fa fa-trash-o'></i> Delete Item</div>
+
 </div>
 
 
@@ -132,11 +147,6 @@
 			<div class='addbutton' @click='add_isbn()'>Add to Library</div>
 			
 		</div>
-	</div>
-
-	<!-- Scan Barcode into Library -->
-	<div v-if='window === "barcode"' id='barcode' class='window'>
-		
 	</div>
 
 </div>
