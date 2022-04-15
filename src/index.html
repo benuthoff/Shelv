@@ -104,7 +104,7 @@
 
 	<div class='divider'></div>
 
-	<div class='delete-key'><i class='fa fa-trash-o'></i> Delete Item</div>
+	<div class='delete-key' @click='window = "delete_warning"'><i class='fa fa-trash-o'></i> Delete Item</div>
 
 </div>
 
@@ -146,6 +146,14 @@
 
 			<div class='addbutton' @click='add_isbn()'>Add to Library</div>
 			
+		</div>
+	</div>
+
+	<div v-if='window === "delete_warning"' id='delete_warning' class='window'>
+		<h1>Delete {{ working_instance.title  }}?</h1>
+		<div class='buttons'>
+			<div @click='removeInstance();'>Delete!</div>
+			<div @click='window=false;'>Cancel</div>
 		</div>
 	</div>
 

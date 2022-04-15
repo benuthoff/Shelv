@@ -44,8 +44,6 @@ var Shelv = new Vue({
 			socket.emit('data_request', next);
 		},
 		window: (next, prev) => {
-			if (prev === 'barcode') {};
-			if (next === 'barcode') { Shelv.scanner_init() };
 			// Clear ISBN Search.
 			Shelv.isbn_search.id = '';
 			Shelv.isbn_search.result = false;
@@ -160,6 +158,13 @@ var Shelv = new Vue({
 				
 			});
 			return main;
+		},
+
+		removeInstance() {
+			this.main.splice(this.working_index,1);
+			this.working_index = false;
+			this.window = false;
+			this.saveData();
 		},
 
 		// Adds a blank entry to the database.

@@ -18,6 +18,7 @@ body {
 	--fade-icon: #00000094;
 	--solid-color: #363636;
 	--delete-color: #ff4f4f;
+	--window-accent: #dedede;
 
 	--time: 0.1s ease-in-out, transform 0s, background-image 0s;
 	--active: scale(0.96);
@@ -155,8 +156,16 @@ body {
 	outline: solid 3px var(--fade-outline);
 
 	display: grid;
-	grid-template-rows: 200px min-content;
+	grid-template-rows: 200px auto;
 	padding: 12px;
+	transition: var(--time);
+
+	&:hover, &:active {
+		outline-color: var(--solid-color);
+	}
+	&:active {
+		transform: var(--active);
+	}
 
 	& > * { 
 		display: flex;
@@ -180,6 +189,8 @@ body {
 		border-top: solid 3px var(--fade-outline);
 		padding: 10px;
 		margin: 0 10px;
+		padding-bottom: 4px;
+		text-align: center;
 		span {
 			font-size: 24px;
 			color: var(--fade-icon);
@@ -366,7 +377,7 @@ input {
 		background-image: var(--bg-pattern);
 		background-size: 15px 15px;
 		z-index: 2;
-		outline: solid 3px var(--fade-outline);
+		outline: solid 3px var(--window-accent);
 		box-shadow: var(--box-shadow) 0 0 100px;
 	}
 
@@ -466,12 +477,47 @@ input {
 		}
 	}
 
-	#barcode {
-		padding: 6px;
-		#qr-reader {
-			border: none !important;
-			width: 50vw;
+	#delete_warning {
+		padding: 32px;
+
+		h1 {
+			font-size: 32px;
+			margin-top: 0;
 		}
+
+		& > div {
+			display: grid;
+			grid-template-columns: auto auto;
+			column-gap: 12px;
+
+			div {
+				font-size: 24px;
+				outline: solid 3px var(--fade-outline);
+				padding: 16px;
+				text-align: center;
+				transition: var(--time);
+				font-family: 'Oxygen-Bold';
+				&:hover, &:active {
+					background-color: var(--solid-color);
+					outline-color: var(--solid-color);
+					color: var(--background);
+				}
+				&:active {
+					transform: var(--active-list);
+				}
+				&:first-child {
+					color: var(--delete-color);
+					&:hover, &:active {
+						background-color: var(--delete-color);
+						outline-color: var(--delete-color);
+						color: var(--background);
+					}
+				}
+			}
+
+
+		}
+
 	}
 
 }
