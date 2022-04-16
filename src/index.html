@@ -118,7 +118,7 @@
 		<div v-for='x in database_list' v-if='x !== database_name'>
 			<i class='fa fa-database'></i> {{ x }}
 		</div>
-		<div><i class='fa fa-plus'></i> New</div>
+		<div @click='window="new_database"'><i class='fa fa-plus'></i> New</div>
 	</div>
 
 	<!-- New Item Menu -->
@@ -144,7 +144,10 @@
 				</div>
 			</div>
 
-			<div class='addbutton' @click='add_isbn()'>Add to Library</div>
+			<div class='buttons'>
+				<div @click='add_isbn()'>Add to Library</div>
+				<div @click='add_isbn(reset=true)'>Add Another</div>
+			</div>
 			
 		</div>
 	</div>
@@ -152,9 +155,15 @@
 	<div v-if='window === "delete_warning"' id='delete_warning' class='window'>
 		<h1>Delete {{ working_instance.title  }}?</h1>
 		<div class='buttons'>
-			<div @click='removeInstance();'>Delete!</div>
+			<div class='warn' @click='removeInstance();'>Delete!</div>
 			<div @click='window=false;'>Cancel</div>
 		</div>
+	</div>
+
+	<div v-if='window === "new_database"' id='new_database' class='window'>
+		<div class='label'>New Database Name:</div>
+		<input type='text' v-model='new_db_name_input'><br>
+		<div class='centflex'><div class='button' @click='createNewDB'>Create DB</div></div>
 	</div>
 
 </div>

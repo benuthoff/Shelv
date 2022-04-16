@@ -75,8 +75,10 @@ saveconfig();
 // Socket.io Endpoints
 io.on('connection', (socket) => {
 
+	// Send the app the config at startup.
 	socket.emit('configfile', __config);
 
+	// When the app requests database, send...
 	socket.on('data_request', (name)=>{
 		__config.open_database = name;
 		saveconfig();
@@ -84,8 +86,17 @@ io.on('connection', (socket) => {
 		socket.emit('database_load', data);
 	});
 
+	// Saves database changes to file system.
 	socket.on('save_data', (pack)=>{
 		fs.writeFileSync(root+'/' + __config.open_database + '.json', JSON.stringify(pack));
+	});
+
+	// Creates a new database `name`.json, and opens it.
+	socket.on('new_database', (name)=>{
+		fs.writeFileSync(root+'/' + name + '.json', JSON.stringify(__newfile));
+		__config.open_database = name;
+		saveconfig();
+		socket.emit('configfile', __config);
 	});
 
 });

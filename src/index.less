@@ -146,12 +146,14 @@ body {
 
 #space {
 	display: flex;
+	flex-wrap: wrap;
 }
 #space > div {
 
 	font-size: 32px;
 	font-family: 'Oxygen-Bold';
-	width: 400px;
+	max-width: 384px;
+	min-width: 384px;
 	margin: 24px;
 	outline: solid 3px var(--fade-outline);
 
@@ -439,13 +441,14 @@ input {
 	#isbn_search {
 		font-size: 32px;
 		padding: 24px;
-		width: 40vw;
+		min-width: 40vw;
 		#search_in { font-family: 'Oxygen-Bold' }
 		#search_results {
 			.grid {
 				display: grid;
 				grid-template-columns: min-content auto;
-				margin-top: 24px;
+				margin: 24px 0;
+				margin-right: 12px;
 				column-gap: 24px;
 			}
 			img {
@@ -485,39 +488,40 @@ input {
 			margin-top: 0;
 		}
 
-		& > div {
-			display: grid;
-			grid-template-columns: auto auto;
-			column-gap: 12px;
+	}
 
-			div {
-				font-size: 24px;
-				outline: solid 3px var(--fade-outline);
-				padding: 16px;
-				text-align: center;
-				transition: var(--time);
-				font-family: 'Oxygen-Bold';
-				&:hover, &:active {
-					background-color: var(--solid-color);
-					outline-color: var(--solid-color);
-					color: var(--background);
-				}
-				&:active {
-					transform: var(--active-list);
-				}
-				&:first-child {
-					color: var(--delete-color);
-					&:hover, &:active {
-						background-color: var(--delete-color);
-						outline-color: var(--delete-color);
-						color: var(--background);
-					}
-				}
-			}
-
-
+	#new_database {
+    	padding: 26px 32px;
+		.label {
+			font-size: 32px;
+			padding-bottom: 24px;
+			font-family: 'Oxygen-Bold';
 		}
-
+		input {
+			text-align: center;
+		}
+		.centflex {
+			display: flex;
+			justify-content: center;
+			padding-top: 12px;
+		}
+		.button {
+			display: inline-block;
+			font-size: 24px;
+			outline: solid 3px var(--fade-outline);
+			padding: 16px;
+			text-align: center;
+			transition: var(--time);
+			font-family: 'Oxygen-Bold';
+			&:hover, &:active {
+				background-color: var(--solid-color);
+				outline-color: var(--solid-color);
+				color: var(--background);
+			}
+			&:active {
+				transform: var(--active-list);
+			}
+		}
 	}
 
 }
@@ -541,10 +545,48 @@ h1 {
 	}
 }
 
+.buttons {
+	display: grid;
+	grid-template-columns: auto auto;
+	column-gap: 12px;
+
+	div {
+		font-size: 24px;
+		outline: solid 3px var(--fade-outline);
+		padding: 16px;
+		text-align: center;
+		transition: var(--time);
+		font-family: 'Oxygen-Bold';
+		&:hover, &:active {
+			background-color: var(--solid-color);
+			outline-color: var(--solid-color);
+			color: var(--background);
+		}
+		&:active {
+			transform: var(--active-list);
+		}
+		&.warn {
+			color: var(--delete-color);
+			&:hover, &:active {
+				background-color: var(--delete-color);
+				outline-color: var(--delete-color);
+				color: var(--background);
+			}
+		}
+	}
+}
+
 
 /* icon spacing fix */
 .fa-th-list, .fa-th-large, .fa-chevron-right {
 	transform: translateY(2px);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: var(--fade-outline);
 }
 
 /* animations */

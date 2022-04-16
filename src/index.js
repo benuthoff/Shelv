@@ -20,7 +20,7 @@ var Shelv = new Vue({
 			['list', 'fa fa-th-list']
 		],
 
-		database_name: false,
+		database_name: 'Loading Database...',
 		database_type: false,
 		current_index: 0,
 
@@ -33,6 +33,8 @@ var Shelv = new Vue({
 			id: '',
 			result: false
 		},
+
+		new_db_name_input: '',
 
 		working_index: false,
 		working_instance: false
@@ -167,6 +169,10 @@ var Shelv = new Vue({
 			this.saveData();
 		},
 
+		createNewDB() {
+			
+		},
+
 		// Adds a blank entry to the database.
 		add_manual() {
 			// Adds a blank volume to the list.
@@ -190,16 +196,24 @@ var Shelv = new Vue({
 		},
 
 		// Adds the searched book to the database.
-		add_isbn() {
+		add_isbn(reset=false) {
 			// Hide window, add to main, 
 			// look at the item in the list view,
 			// and save the data to the fs.
-			this.window = false;
 			this.main.unshift(this.isbn_search.result);
-			this.setView('list');
-			this.setInstance(0);
 			this.current_index += 1;
 			this.saveData();
+			// 'ADD ANOTHER'
+			if (reset) { 
+				this.isbn_search.id = '';
+				this.isbn_search.result = false;
+			} else { // Default
+				this.window = false;
+				this.setView('list');
+				this.setInstance(0);
+			};
+			
+
 		}
 
 	}
