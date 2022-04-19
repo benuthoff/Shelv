@@ -60,7 +60,7 @@
 
 	</div>
 
-	<div v-if='Object.keys(groups.Series).includes("Other...")' @click='openSeries(x)'>
+	<div v-if='Object.keys(groups.Series).includes("Other...")' @click='openSeries("")'>
 		<div class='images'>
 			<img v-if='series("").length > 2' :src='series("")[2].cover' class='side left' />
 			<img :src='series("")[0].cover'/>
@@ -72,9 +72,12 @@
 </div>
 <div class='view' id='series' v-if='view === "series"'>
 	
-	<h1>{{ view_series[0].series }}</h1>
+	<h1>
+		<span v-if='view_series[0].series === ""'>Other Volumes</span>
+		<span v-else>{{ view_series[0].series }}</span>
+	</h1>
 
-	<div class='flex' :class='{ shrink: working_index }'>
+	<div class='flex' :class='{ shrink: working_index !== false }'>
 		<div v-for='x,i in view_series' @click='setInstance( getIndexByID(x.id) )'>
 			<img :src='x.cover'/>
 		</div>

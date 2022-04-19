@@ -67,18 +67,19 @@ var Shelv = new Vue({
 					if (data.totalItems > 0) {
 
 						let i = data.items[0].volumeInfo;
+						let cv = i.imageLinks.thumbnail.replace('http', 'https');
 
 						Shelv.isbn_search.result = {
 							'id': Shelv.current_index + 1,
 
-							'title': i.title,
-							'author': i.authors.join(', '),
+							'title': i.title ? i.title : '',
+							'author': i.authors ? i.authors.join(', ') : '',
 							'isbn': next,
-							'cover': i.imageLinks.thumbnail.replace('http', 'https'),
+							'cover': cv ? cv : false,
 
 							'series': '',
 							'volume': 0,
-							'pages': i.pageCount,
+							'pages': i.pageCount ? i.pageCount : 0,
 
 							'added': 'Unknown',
 							'notes': ''
@@ -158,7 +159,6 @@ var Shelv = new Vue({
 		},
 
 		openSeries(name) {
-			console.log(name);
 			this.view = 'series';
 			this.view_series = this.series(name);
 		},
