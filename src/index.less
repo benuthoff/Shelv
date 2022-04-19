@@ -20,7 +20,7 @@ body {
 	--delete-color: #ff4f4f;
 	--window-accent: #dedede;
 
-	--time: 0.1s ease-in-out, transform 0s, background-image 0s;
+	--time: 0.1s ease-in-out, transform 0s, background-image 0s, padding 0s, margin 0s;
 	--active: scale(0.96);
 	--active-list: scale(0.99);
 
@@ -48,6 +48,8 @@ body {
 	grid-template-columns: auto auto auto;
 	column-gap: 24px;
 
+	z-index: 995;
+
 	position: fixed;
 	top: 0; right: 0;
 	padding: 24px;
@@ -61,7 +63,8 @@ body {
 
 		font-size: 42px;
 		color: var(--fade-icon);
-		outline: solid 3px var(--fade-outline);
+		outline: solid 3px var(--window-accent);
+		background-color: var(--background);
 
 		transition: var(--time);
 
@@ -176,7 +179,6 @@ body {
 	}
 
 	.images {
-
 		font-size: 0;
 		img {
 			width: 120px;
@@ -202,6 +204,36 @@ body {
 
 }
 
+#series {
+
+	margin-top: unset;
+
+	h1 {
+		margin-top: 54px;
+		margin-bottom: 32px;
+		padding-bottom: 12px;
+		border-bottom: solid 3px var(--fade-icon);
+	}
+
+	.flex {
+		display: flex;
+		flex-wrap: wrap;
+		&.shrink { width: calc(100% - 500px) }
+		& > div {
+			margin: 20px;
+			padding: 12px;
+			outline: solid 3px var(--fade-outline);
+			height: 200px;
+			img { height: 200px }
+			transition: var(--time);
+			&:hover, &:active { outline-color: var(--solid-color) }
+			&:active { transform: var(--active)	}
+		}
+	}
+
+
+}
+
 #editinstance {
 	position: fixed;
 	top: 0; right: 0;
@@ -212,6 +244,7 @@ body {
 	outline: solid 3px var(--solid-color);
 	padding: 32px;
 	font-size: 24px;
+	z-index: 996;
 
 	background-image: var(--bg-pattern);
 	background-size: 15px 15px;
@@ -365,6 +398,7 @@ input {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 997;
 
 	animation: fadeIn 0.14s ease-in-out;
 

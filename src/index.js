@@ -37,18 +37,24 @@ var Shelv = new Vue({
 		new_db_name_input: '',
 
 		working_index: false,
-		working_instance: false
+		working_instance: false,
+
+		view_series: []
 
 	},
 
 	watch: {
+		view: (next, prev) => {
+			document.getElementById('Shelv').scrollTop = 0;
+		},
 		database_name: (next, prev) => {
 			socket.emit('data_request', next);
 		},
 		window: (next, prev) => {
-			// Clear ISBN Search.
+			// Clear Temp Window Bindings
 			Shelv.isbn_search.id = '';
 			Shelv.isbn_search.result = false;
+			Shelv.new_db_name_input = '';
 		},
 		'isbn_search.id': (next, prev) => {
 			if (next.length === 13) {
@@ -136,8 +142,14 @@ var Shelv = new Vue({
 			let allseries = {};
 			this.main.forEach((entry)=>{
 				let list = Object.keys(allseries);
-				if (!list.includes(entry.series)) {
+				// No Series Attached to Instance
+				if (entry.series === '') {
+					if (!list.includes('Other...')) { allseries['Other...'] = 1 }
+					else { allseries['Other...'] += 1 }
+				// Instance Series is not present
+				} else if (!list.includes(entry.series)) {
 					allseries[entry.series] = 1;
+				// Instance Series is present, updates count...
 				} else {
 					allseries[entry.series] += 1;
 				};
@@ -145,14 +157,29 @@ var Shelv = new Vue({
 			this.groups['Series'] = allseries;
 		},
 
+		openSeries(name) {
+			console.log(name);
+			this.view = 'series';
+			this.view_series = this.series(name);
+		},
+
+		getIndexByID(id) {
+			for (let i=0; i<this.main.length; i++) {
+				if (this.main[i].id === id) {
+					return i;
+				};
+			};
+			return false;
+		},
+
 		series(name) {
 			// Get all entries in series.
-			let main = this.main.filter( entry => entry.series === name );;		
+			let main = this.main.filter( entry => entry.series === name );	
 			// Order all entries by volume #.
 			main.sort((a,b)=>{
 
-				let av = parseInt(a.volume);
-				let bv = parseInt(b.volume);
+				let av = parseFloat(a.volume);
+				let bv = parseFloat(b.volume);
 
 				if (av === NaN || bv === NaN || av > bv) { return 1 }
 				else if (av < bv) { return -1 }
@@ -170,7 +197,8 @@ var Shelv = new Vue({
 		},
 
 		createNewDB() {
-			
+			socket.emit('new_database', this.new_db_name_input);
+			this.window = false;
 		},
 
 		// Adds a blank entry to the database.

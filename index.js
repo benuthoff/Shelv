@@ -94,7 +94,8 @@ io.on('connection', (socket) => {
 	// Creates a new database `name`.json, and opens it.
 	socket.on('new_database', (name)=>{
 		fs.writeFileSync(root+'/' + name + '.json', JSON.stringify(__newfile));
-		__config.open_database = name;
+		__config.open_database = name; // Set to current file.
+		__config.database_list.push(name); // Add to database list.
 		saveconfig();
 		socket.emit('configfile', __config);
 	});
