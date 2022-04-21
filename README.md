@@ -7,6 +7,7 @@
 ## Dependencies
 <h3 align='center'>Client-Side: <a href='https://vuejs.org/' target='blank'>Vue.js</a>, <a href='https://fontawesome.com/v4/' target='blank'>Font Awesome</a>, <a href='https://lesscss.org/' target='blank'>Less CSS</a></h3>
 <h3 align='center'>Server-Side: <a href='https://expressjs.com/' target='blank'>Express.js</a>, <a href='https://socket.io/' target='blank'>Socket.io</a></h3>
+<h3 align='center'>API Used: <a href='https://developers.google.com/books/docs/overview'>Google Books</a></h3>
 
 ## Screenshots
 ### Home
