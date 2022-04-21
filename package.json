@@ -1,7 +1,7 @@
 {
-  "name": "shelv",
+  "name": "Shelv",
   "version": "1.0.0",
-  "description": "Database managment program for media.",
+  "description": "Manga Database Web Server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
