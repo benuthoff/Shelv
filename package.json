@@ -1,5 +1,5 @@
 {
-  "name": "Shelv",
+  "name": "shelv",
   "version": "1.0.0",
   "description": "Manga Database Web Server",
   "main": "index.js",
